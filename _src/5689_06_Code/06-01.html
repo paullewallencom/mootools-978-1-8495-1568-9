@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>06-01 :: Draggging product images around on the screen :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <!-- got to have the CORE, but -->
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+  <!-- the MORE has all the trix -->
+  <script type="text/javascript" src="mootools-more-1.3.0.js"></script>
+  <!-- at least, in chapter SIX! -->
+</head>
+<body>
+
+  <form id="myform" action="javascript:" method="post">
+  <h1>My Big Store o' Stuff</h1>
+  <h2>Cutting prices and all that booyah!</h2>
+  <small>You are here:</small> <strong>shopping -&gt; stuff -&gt; more stuff</strong><br/>
+  <div id="left">
+  </div>
+  <div id="right">
+    <div class="product"><a id="p1"><img src="06_product_1.jpg" alt=""/></a></div>
+    <div class="product"><a id="p2"><img src="06_product_2.jpg" alt=""/></a></div>
+    <div class="product"><a id="p3"><img src="06_product_3.jpg" alt=""/></a></div>
+    <div class="product"><a id="p4"><img src="06_product_4.jpg" alt=""/></a></div>
+    <div class="product"><a id="p5"><img src="06_product_5.jpg" alt=""/></a></div>
+    <div class="product"><a id="p6"><img src="06_product_6.jpg" alt=""/></a></div>
+  </div>
+  <br clear="all"/>
+  </form>
+
+  <style type="text/css">
+  body { background-color:#BCBCBC; font-size:11px; font-family:arial; }
+  #myform { display:block; width:780px; margin:auto; padding:10px; background-color:#FFF; }
+  #left { width:200px; margin:10px 30px 10px 10px; float:left; border:1px solid #ABABAB; }
+  #hitter { width:200px; height:160px; }
+  #right { width:520px; float:left; }
+  div.product { width:222px; float:left; margin:10px; }
+  div.product a { display:block; border:1px solid #ABABAB; }
+  div.product a img { border:10px solid #CDCDCD; } 
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  var whereami = {};
+  $$('div.product').each(function(el) { 
+    var aid = el.getFirst().get('id');
+    var img_size = $$('#'+aid+' img')[0].getSize();
+    el.setStyle('height',img_size.y);
+    new Drag.Move(aid,{
+      droppables: 0,
+      onStart: function(el) {
+        whereami[el.get('id')] = el.getPosition();
+      },
+      onDrop: function(el) {
+        var put_it_back = function() { el.setPosition(whereami[el.get('id')]); };
+        put_it_back.delay(1000);
+      }
+    });
+  });
+  </script>
+</body>
+</html>

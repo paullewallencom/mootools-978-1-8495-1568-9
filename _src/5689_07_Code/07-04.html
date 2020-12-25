@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>07-04 :: Creating a listener that says "Hello World" upon CLICK and MOUSEOVER :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <form action="javascript:" method="get">
+    <input type="button" id="mybutton" value="Greet Me!" style="width:300px;height:200px;"/>
+  </form>
+  <h1 id="mycanvas"></h1>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  var mygreeting = 'Hello World!';
+  $('mybutton').addEvents({
+    'click':say_hello,
+    'mouseover':say_hello
+  });
+
+  function say_hello() {
+    $('mycanvas').set('text',mygreeting); // 1 write to DOM
+    alert(mygreeting);                    // 2 pop up in modal dialogue
+    window.status = mygreeting;           // 3 set the window status
+    console.log(mygreeting);              // 4 write to the console
+    (function(){ $('mycanvas').set('html',''); }).delay(1000);
+  }
+  </script>
+</body>
+</html>

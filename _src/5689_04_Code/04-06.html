@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>04-06 :: Slide in text from off the page :: MooTools Recipes `(>>)^</title>
+  <!-- got to have the CORE, but -->
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+  <!-- let's n0t forget the MORE -->
+  <script type="text/javascript" src="mootools-more-1.3.0.js"></script>
+  <!-- at least in chapter FOUR! -->
+</head>
+<body>
+
+  <style type="text/css">
+  body { background:#CDCDCD; }
+  #welcome_box { width:200px; margin:50px auto; padding:50px; background:#777; }
+  #welcome { color:#FF0; text-align:center; font-family:fantasy; border:3px double #ABABAB; }
+  </style>
+  <div id="welcome_box">
+    <div id="welcome">
+      <h1>Welcome to Jombo.com!</h1>Everything is possible at jombocom!</div>
+    </div>
+  </div>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  var effects = new Fx.Slide('welcome', {
+    duration: 2500,
+    transition: Fx.Transitions.Bounce.easeOut
+  });
+  effects.hide('horizontal');
+
+  // wait a few seconds before sliding in the text
+  setTimeout("effects.slideIn('horizontal');",1000);
+
+  </script>
+</body>
+</html>

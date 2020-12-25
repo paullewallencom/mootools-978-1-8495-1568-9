@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>05-12 :: Querying an MP3 play list :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <form action="javascript:" method="get">
+    Query for MP3's matching string: <input type="text" id="mp3_query" name="mp3_query" value="*.mp3"/>
+    <input type="button" id="mybutton" value="JSON MP3 List" 
+      onclick="send_query();">
+  </form>
+  <div id="json_data"></div>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+
+  // request is extended with the Request.JSON class
+  var myJax = new Request.JSON({
+
+    // use the google api with our domain specific api key
+    url: "05_mp3_list.php",
+
+    // receive the response from amazon
+    onComplete: function(mp3_json) {
+      if (!$defined(mp3_json.Error)) { 
+
+        // parse the data into html
+        var stuff = '';
+        for(el in mp3_json.mp3s) {
+          stuff += '<br/><a href="'+mp3_json.mp3s[el]+'">'+mp3_json.mp3s[el]+'</a>';
+        };
+      } else {
+        var stuff = mp3_json.Error;
+      }
+
+      // introduce the html parsed from json into the dom
+      $('json_data').set('html',stuff);
+
+    }
+  });
+  
+  function send_query() {
+
+    // prepare the data to send
+    var el = $('mp3_query');
+    data = {'mp3_query':el.get('value')};
+
+    // make the actual ajax (json) call
+    myJax.send({data:data});
+  }
+  </script>
+</body>
+</html>

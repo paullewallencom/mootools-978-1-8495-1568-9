@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>08-08 :: Show a notification to a user that glows momentarily :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <form action="" method="get">
+    <label for="name">Name: </label>
+    <input type="text" name="name" value=""/>
+    <span id="error_message"></span>
+    <br/>
+    <input type="button" value="submit"/>
+  </form>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  var e = $('error_message');
+  var myfx = new Fx.Tween(e,{
+    property:'backgroundColor',
+    duration:1000,
+    link:'chain'
+  });
+  $$('form input[type=text]').addEvent('keyup',function() {
+    // set the error message text
+    e.set('text',
+      'Hey!  My name is '+this.get('value')+' too!');
+    // make it glow
+    myfx.start('#FF0').chain(function() {
+      this.start('#FFF');
+    });
+  });
+  </script>
+</body>
+</html>

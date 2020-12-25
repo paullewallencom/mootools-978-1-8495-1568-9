@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>10-04 :: Upgrading all corvettes via recall - Implement AND Extend! :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <h1>Speeds Before</h1>
+  <div id="before"></div> 
+
+  <h1>Speeds After</h1>
+  <div id="after"></div> 
+
+  <noscript>JavaScript is disabled.</noscript>
+
+  <script type="text/javascript">
+
+  // create two classes from the base Class
+  var Car = new Class({
+    showSpeed: function() { return 0; }
+  }); 
+  var SportyEngine = new Class({
+    speed: 10,
+    showSpeed: function() { return this.speed; }
+  });
+
+  // Extend one, Implement the other
+  var Corvette = new Class({
+    Extends: Car,
+    speed: 1,
+    showSpeed: function() { 
+      // this.parent calls the overridden class
+      return this.parent()+1; 
+    }
+  });
+  var ZR1 = new Class({
+    // multiple classes may be implemented
+    //Implements: [Car, SportyEngine], // yep
+    Extends: Car, // yep
+    Implements: SportyEngine, // yep
+    showSpeed: function() {
+      // this.parent is not available
+      //return this.parent()+1; // nope
+      return this.speed+1;
+    }
+  });
+
+  var corvette = new Corvette();
+  var zr1 = new ZR1();
+
+  $('before').set('html',
+    '<table>'+
+      '<tr><th>Corvette:</th>'+
+      '<td>'+corvette.showSpeed()+'</td></tr>'+
+      '<tr><th>ZR1</th>'+
+      '<td>'+zr1.showSpeed()+'</td></tr>'+
+    '</table>');
+
+  // the mfg now recalls *all* cars to be +5 faster
+  Car = Car.implement({
+    upGrade: function() {
+      this.speed+=5;
+    },
+    showSpeed: function() {
+      return 5;
+    }
+  });  
+  corvette.upGrade();
+  zr1.upGrade();
+
+  $('after').set('html',
+    '<table>'+
+      '<tr><th>New Corvette:</th>'+
+      '<td>'+corvette.showSpeed()+'</td></tr>'+
+      '<tr><th>New ZR1</th>'+
+      '<td>'+zr1.showSpeed()+'</td></tr>'+
+    '</table>');
+
+  </script>
+</body>
+</html>
+

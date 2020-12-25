@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>06-02 :: Making a shopping cart where products can be dropped :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <!-- got to have the CORE, but -->
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+  <!-- the MORE has all the trix -->
+  <script type="text/javascript" src="mootools-more-1.3.0.js"></script>
+  <!-- at least, in chapter SIX! -->
+</head>
+<body>
+
+  <form id="myform" action="javascript:" method="post">
+  <h1>My Big Store o' Stuff</h1>
+  <h2>Cutting prices and all that booyah!</h2>
+  <small>You are here:</small> <strong>shopping -&gt; stuff -&gt; more stuff</strong><br/>
+  <div id="left">
+    <small>My Cart:</small>
+    <div id="hitter"></div>
+  </div>
+  <div id="right">
+    <div class="product"><a id="p1"><img src="06_product_1.jpg" alt=""/></a></div>
+    <div class="product"><a id="p2"><img src="06_product_2.jpg" alt=""/></a></div>
+    <div class="product"><a id="p3"><img src="06_product_3.jpg" alt=""/></a></div>
+    <div class="product"><a id="p4"><img src="06_product_4.jpg" alt=""/></a></div>
+    <div class="product"><a id="p5"><img src="06_product_5.jpg" alt=""/></a></div>
+    <div class="product"><a id="p6"><img src="06_product_6.jpg" alt=""/></a></div>
+  </div>
+  <br clear="all"/>
+  </form>
+
+  <style type="text/css">
+  body { background-color:#BCBCBC; font-size:11px; font-family:arial; }
+  #myform { display:block; width:780px; margin:auto; padding:10px; background-color:#FFF; }
+  #left { width:200px; margin:10px 30px 10px 10px; float:left; border:1px solid #ABABAB; }
+  #hitter { width:200px; height:160px; text-align:center; }
+  #right { width:520px; float:left; }
+  div.product { width:222px; float:left; margin:10px; }
+  div.product a { display:block; border:1px solid #ABABAB; }
+  div.product a img { border:10px solid #CDCDCD; } 
+
+  #left.in { border:3px solid #ABABAB; }
+  #hitter a.in-cart-small { width:85px; display:block; float:left; }
+  #hitter a.in-cart-small img { width:85px; }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  var whereami = {};
+  $$('div.product').each(function(el) { 
+    var aid = el.getFirst().get('id');
+    var img_size = $$('#'+aid+' img')[0].getSize();
+    el.setStyle('height',img_size.y);
+    new Drag.Move(aid,{
+      droppables: '#hitter',
+      onStart: function(el) {
+        whereami[el.get('id')] = el.getPosition();
+      },
+      onDrop: function(el) {
+        if (!el.hasClass('in-cart')) {
+          var put_it_back = function() { el.setPosition(whereami[el.get('id')]); };
+          put_it_back.delay(1000);
+        } else {
+
+          // the drop zone may have a static height (when empty)
+          $('hitter').setStyle('height','');
+
+          // firstly, put back the element we're dragging
+          var dragid = el.get('id');
+          el.setPosition(whereami[dragid]);
+
+          // we need a copy of the picture to put in the cart
+          var clone_product = el.clone();
+          clone_product.setStyles({'left':0,'top':0,'position':'relative'});
+
+          // id's need to be unique and the pic should be smaller
+          var newid = String.uniqueID()+'__'+dragid;
+          clone_product.getFirst().set('id',newid);
+          clone_product.addClass('in-cart-small');
+ 
+          // put the new item in the cart
+          $('hitter').grab(clone_product);
+        }
+      },
+      onEnter: function(el) {
+        el.addClass('in-cart');
+      },
+      onLeave: function(el) {
+        el.removeClass('in-cart');
+      }
+    });
+  });
+  </script>
+</body>
+</html>

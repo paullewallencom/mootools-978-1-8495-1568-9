@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>08-10 :: Making usability sexy with fading font-size changer :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <div id="main" class="medium">
+    <form action="" method="get" id="font_sizer">
+      Choose text size:
+      <input type="button" id="small" value="S"/>
+      <input type="button" id="medium" value="M" disabled="disabled"/>
+      <input type="button" id="large" value="L"/>
+    </form>
+    <h1>Welcome!</h1>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec auctor est. Aenean neque sem, vulputate quis ultrices quis, eleifend vitae dolor. Nulla euismod sollicitudin felis, ut facilisis lectus faucibus eu. Sed sed nunc ipsum. Pellentesque dapibus diam varius eros vehicula gravida varius felis dictum. Aliquam erat volutpat. Ut eget purus in tellus sollicitudin sodales. In hac habitasse platea dictumst. Suspendisse scelerisque leo at metus vestibulum tincidunt. Donec ligula velit, vulputate eu pharetra at, sodales sed lacus. Maecenas imperdiet egestas ligula quis auctor. Duis vitae nulla eget mi accumsan venenatis eu a nisi. In hac habitasse platea dictumst. Sed varius, augue non pretium ultrices, quam augue dapibus nulla, sed molestie metus leo sed lectus. Phasellus dictum mauris ac lectus volutpat convallis. Aliquam eleifend semper vestibulum. Pellentesque id faucibus neque.
+</p>
+<p>
+Cras diam mi, elementum ac lacinia id, pretium in libero. Quisque ac dignissim augue. Donec et sagittis tortor. Sed sapien nisi, venenatis ac ornare sed, pulvinar aliquam mauris. Quisque volutpat molestie turpis vitae posuere. Etiam in tellus eget lorem malesuada dapibus et a nunc. Donec quis justo a sapien volutpat condimentum eu aliquet mauris. Fusce ullamcorper, magna id malesuada rutrum, metus quam porta dolor, quis aliquet orci velit ac elit. Nunc tincidunt ullamcorper velit quis egestas. Aliquam eu neque lorem. Vestibulum felis mi, laoreet quis vulputate at, dignissim pretium est. Nulla nec tortor id massa feugiat rutrum. Sed vel risus nibh. Nulla adipiscing enim non enim mattis at congue metus placerat. Phasellus nunc sapien, condimentum vel elementum ac, semper in tortor. Aliquam commodo aliquet odio nec pretium. Integer suscipit, massa a blandit auctor, massa mi placerat mauris, non varius neque elit in nisi. Nullam leo ipsum, pharetra eget dictum sed, ultricies vel neque. Ut felis turpis, elementum quis vestibulum vel, egestas eu erat.
+</p>
+<p>
+Nunc ac odio erat, sit amet vulputate mauris. In hac habitasse platea dictumst. Nam euismod augue at lectus condimentum pretium ut sit amet leo. Suspendisse sit amet odio nec urna congue pulvinar. In vitae sapien neque. Sed et rhoncus diam. Donec blandit justo nisl. Mauris non ante vel ipsum elementum mollis. Nullam erat erat, auctor et auctor ac, suscipit ut orci. Integer cursus felis eget nisl commodo vel viverra diam dictum. Aliquam magna lacus, sagittis vitae consequat congue, viverra et urna. Pellentesque at egestas justo. Donec pharetra nisl et justo aliquet ultrices. Aliquam vestibulum auctor vestibulum. Sed eu libero lacus, cursus posuere sapien. Integer ornare ipsum varius mi faucibus at porta nisl consequat. 
+</p>
+  </div>
+
+  <style type="text/css">
+    #main {  margin:0 auto; width:780px; padding:10px; }
+
+    .small { font-size:10px; }
+    .medium { font-size:14px; }
+    .large { font-size:20px; }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  ibuttons = $$('#font_sizer input');
+  ibuttons.addEvent('click',function() {
+    var newsize = this.get('id');
+    ibuttons.removeProperty('disabled'); 
+    $(newsize).set('disabled','disabled');
+    $('main').morph('.'+newsize);
+  });
+  </script>
+</body>
+</html>

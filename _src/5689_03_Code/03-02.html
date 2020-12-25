@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>03-02 :: Create A Link :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <div id="text" style="width:300px;font-family:fantasy">
+    You and the other adventurers turn the corner of the long, damp hallway.  There is a door through which large thudding noises can be heard and occasional light flashes can be seen around the edges of the frame.  It smells like something is burning.
+  </div>
+  <br/>
+  <div>
+    <a href="javascript:" class="choices" id="choice_1">Open the Door!</a> | 
+    <a href="javascript:" class="choices" id="choice_2">Use Magic!</a>
+  </div>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  var choice_1_1 = 'Slay the dragon using a red sword!';
+  var choice_1_2 = 'Use magic to slay that evil beast!';
+  var choice_1_text = 'The dragon attempts to eat you.';
+  var choice_1_1_text = 'The dragon gives you burgers!';
+  var choice_1_2_text = 'You turn into a cheeseburger.';
+  var choice_2_1 = 'Make more delicious cheeseburgers.';
+  var choice_2_2 = 'Sadly perish as if a cheeseburger.';
+  var choice_2_text = 'The magic creates cheesburgers.';
+  var choice_2_1_text = 'The cheeseburgers taste fine!';
+  var choice_2_2_text = 'The cheeseburgers eat you up!';
+  function show_text(num) {
+    var mytext = eval('choice'+num+'_text');
+    $('text').set('text',mytext);
+  }
+  function set_links(num) {
+
+    // create the first new A tag
+    for(var both=1; both<3; both++) {
+      //alert(mytext+"\n\nreplacing: choice"+num);
+      var mytext = eval('choice'+num+'_'+both);
+
+      // this is the sexy part where we create the A tag
+      var new_a_tag = new Element('a',{
+        'id': 'choice'+num+'_'+both,
+        'href': 'javascript:',
+        'text': mytext,
+        'class': 'choices'
+      }).replaces($('choice_'+both));
+
+      // the new links need click events
+      add_events(0);
+    }
+  }
+  function add_events(set_the_links) {
+    $$('.choices').addEvent('click', function() {
+      var num = this.get('id').replace('choice','');
+      show_text(num);
+      if (set_the_links) set_links(num);
+      else $$('.choices').destroy();
+    });
+  }
+  add_events(1);
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>01-05 :: Store A List In An Aray :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+  <form action="javascript:" method="get">
+    <input type="text" id="myitem"/>
+    Ignore if already in the array? 
+    <input type="checkbox" id="unique"/>
+    <input type="submit" id="mybutton" value="Add This" 
+      onclick="store_item_in_array();"/>
+  </form>
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+
+  // declare the array
+  var myarray = []; 
+
+  // an array-dedicated utility function to add elements
+  function store_item_in_array() {
+    // use the $ object to get the element with id "myitem"
+    var myitem = $('myitem').value;
+    // ternary operators can save a lot of space
+    var unique = ($('unique').get('checked')!==false) ? 1 : 0;
+    if (!unique) {
+      // (A) add an item to an array with raw JavaScript
+      myarray.push(myitem);
+    } else {
+
+      // (B) add an item to an array, but make it moonique
+      myarray.include(myitem);
+
+    }
+    // to loop over an array check the next recipe
+    alert('Length of Array: '+myarray.length);
+  }
+  </script>
+</body>
+</html>

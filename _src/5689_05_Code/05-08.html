@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>05-08 :: Build a calculator with Ajax :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+ 
+  <div id="main"> 
+    <h1>Mortgage ratio calculator</h1>
+    <form action="javascript:" method="get" onsubmit="send_form();">
+      <div id="calculator"> 
+        <div id="screen" class="key">0</div>
+        <input type="button" class="key" value="7"/> <input type="button" class="key" value="8"/>
+        <input type="button" class="key" value="9"/> <input type="button" class="key" value="4"/>
+        <input type="button" class="key" value="5"/> <input type="button" class="key" value="6"/>
+        <input type="button" class="key" value="1"/> <input type="button" class="key" value="2"/>
+        <input type="button" class="key" value="3"/> <input type="button" class="key" value="C"/>
+        <input type="button" class="key" value="0"/> <input type="button" class="key" value="OK"/>
+      </div>
+
+      <div id="questions">
+        <div id="question">Enter your gross, household monthly income:</div>
+        <input type="text" id="my_number" name="gross"/>
+        <input type="submit" value="Next"/>
+      </div>
+
+    </form>
+  </div>
+
+  <style type="text/css">
+  #main { font-family:arial,sans; font-size:13px; width:400px; }
+  #calculator { width:110px; margin:5px; padding:5px; border:1px solid #BBB; -moz-border-radius:5px; border-radius:5px; float:left; }
+  #questions { width:180px; margin-left:20px; float:left; }
+  #question.wait { height:25px; background:#FFF url('05_wait.gif') no-repeat top left; }
+  input[type=submit].wait { display:none; }
+  #my_number { text-align:right; background:#FFF url('05_dollar_sign.jpg') no-repeat center left }
+  .key { width:32px; margin:1px; padding:2px; border:1px solid #BBB; -moz-border-radius:3px; border-radius:3px; }
+  #screen { width:102px; height:21px; line-height:21px; text-align:right; padding:2px; background-color:#BCBCBC; color:#000; font-family:courier, serif; font-size:12px; font-weight:bold; }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+
+  // setup listener for the key pecks
+  $('my_number').addEvent('keypress',function(e) { white_list_keys(e); });
+
+  // setup the listeners for the mouse pecks
+  $$('.key').addEvent('click',function(e) {
+    var key = this.get('value');
+    var scr = $('screen').get('text');
+    switch(key) {
+      case 'OK':
+        $('my_number').set('value',scr);
+        scr = '0'; break;
+      case 'C':
+        scr = '0'; break;
+      default: 
+        scr = scr+key; 
+        scr = scr.toInt();
+    }
+    $('screen').set('text',scr);
+  });
+
+  // handle the ajax communication with the processor
+  var myJax = new Request.JSON({
+    url: '05_calculator.cfm', 
+    onComplete: function(jsonobj) {
+
+      // clean up the waiting hoo ha
+      $('question').removeClass('wait');
+      $$('input[type=submit]').removeClass('wait');
+
+      // do the question or answer work
+      if (!$defined(jsonobj.answer)) {
+
+        // inject the new question
+        var new_number = new Element('input',{ 'type': 'text', 'id': 'my_number' });
+        new_number.inject('question','after');
+        new_number.addEvent('keypress',function(e) { white_list_keys(e); });
+        $('question').set('html',jsonobj.question);
+
+      } else {
+
+        // hey! we have an answer to our calculation!
+        $('questions').set('html',jsonobj.answer); 
+
+      }
+    }
+  });
+
+  function white_list_keys(e) {
+    var e = new Event(e);
+    var valid_chars = '0123456789';
+    if (
+         $defined(e.key) &&                            // not empty, grrr IE
+         !valid_chars.contains(e.key) &&               // is white listed
+         !e.key.test(/(delete|backspace|left|right)/)
+        ) {
+      // then do not allow this key to be typed
+      e.stop(); 
+    }
+  }
+
+  function send_form() {
+
+    // make the loader icon show (waiting hoo ha)
+    $('question').set('text','').addClass('wait');
+    $$('input[type=submit]').addClass('wait');
+
+    // in case they press next without pressing OK
+    if ($('my_number').value.length<1) {
+      $('my_number').value = $('screen').get('text');
+      $('screen').set('text','0');
+    }
+
+    // get the next question
+    $$('input[type=text]').forEach(function(el) {
+
+      // change the current input to hidden 
+      var new_hidden = new Element('input', {
+        'type': 'hidden', // :( IE won't let us Element.set('type','hidden')
+        'name': 'input_'+$$('input[type=hidden]').length,
+        'value':el.value
+      }).inject(el,'after');
+      el.destroy(); // silly ie
+
+      // prepare the data to be sent to the processor via ajax
+      var data = {};
+      $$('input[type=hidden]').forEach(function(el) {
+        // use the handy "eval" to populate data
+        eval('data.'+el.get('name')+'='+el.get('value'));
+      }); 
+
+      // make the actual ajax (json) call
+      myJax.send({data:data});
+    });
+  }
+
+  </script>
+</body>
+</html>

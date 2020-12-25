@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>10-12 :: Extending the Google Font Loader :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+var GWFLoaderBinding;
+var GWFInstance = 1;
+var GWFLoader = new Class({
+  Implements: Options,
+  options: { fontcsv: '' },
+  initialize: function(options) {
+    this.setOptions(options);
+    this.fonts = this.options.fontcsv.split(',');
+    new Element('script',{ src: 'http://jayjohnston.com/google_font_directory.php?callback=GWFLoadingBinding&x='+GWFInstance, type: 'text/javascript' }).inject(document.head);
+    eval('GWFLoaderBinding'+GWFInstance+' = function(gwfdir) { this.set_fonts(gwfdir); }.bind(this);');
+    GWFInstance++;
+  },
+  set_fonts: function(gwfdir) {
+    this.gwfdirfonts = gwfdir.fonts;
+    if (this.fonts[0]!='') this.validate_fonts();
+    else this.generate_code();
+  },
+  validate_fonts: function() {
+    // check to be sure the font requested exists in the google library
+    this.fonts.each(function(font){ 
+      font = font.clean().replace(/ /g,'+');
+      if (!(this.gwfdirfonts).contains(font)) {
+        this.fonts.erase(font);
+        alert('font '+unescape(font)+' is not in the google library');
+      }
+    },this);
+    this.embed_fonts();
+  },
+  embed_fonts: function() {
+    var family = 'family=';
+    var styles = '';
+    this.fonts.each(function(font,i) {
+      family += escape(font.clean()); 
+      if (i<this.fonts.length-1) family += '|';
+      styles += '.'+font.clean().replace(/ /g,'_')+' { font-family: "'+font+'", arial; } '+"\n";
+    },this);
+    new Element('link',{ rel: 'stylesheet', type: 'text/css', href: 'http://fonts.googleapis.com/css?'+family }).inject(document.head);
+    new Element('style',{ type: 'text/css', text: styles }).inject(document.head);
+  },
+  generate_code: function() {
+    // for each of the styles that are available, create an li
+    // display in multiselect format, when clicked generate it
+    this.fonts = [];
+    this.gwfdirfonts.each(function(font) { this.fonts.include(font); },this);
+    // .replace(/[+]/g,' ')
+    this.embed_fonts();
+    new Element('select',{
+      multiple:'multiple',
+      size:'10',
+      style:'width:500px;font-size:20px;line-height:20px;',
+      id:'gwfpicker'
+    }).inject(document.body,'bottom');
+    new Element('textarea',{id:'gwfcode',style:'height:200px;width:400px;'}).inject('gwfpicker','after');
+    this.fonts.each(function(font) {
+      new Element('option',{
+        text: font.replace(/[+]/g,' '), 
+        style:'font-family:\''+font.replace(/[+]/g,' ')+'\''
+      }).inject('gwfpicker','bottom'); 
+    });
+    $('gwfpicker').addEvent('change',function() {
+      var fonts = '';
+      var ops = this.getChildren('option');
+      ops.each(function(op,i) { if (op.selected) fonts += op.get('text').replace(/ /g,'+')+'|'; }); 
+      var js = 'new GWFLoader({fontcsv:'+"\n\n";
+      js += "'"+fonts.substr(0,fonts.length-1)+"'";
+      js += "\n\n"+'});';
+      $('gwfcode').set('html',js); 
+    });
+  }
+}); 
+  // instantiation without options routes flow to GWFLoader::generate_code();
+  new GWFLoader();
+  </script>
+</body>
+</html>

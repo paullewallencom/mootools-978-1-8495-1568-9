@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>08-09 :: Make a golf ball ease up to a hole and stop :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <div id="green"></div>
+
+  <style type="text/css">
+  #green {
+    margin:0 auto;
+    background:transparent url('08_golf_green.jpg') no-repeat 0 0;
+    width:500px; height:500px;
+  }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  // inject the ball
+  var ball = new Element('img',{
+    id: 'ball',
+    src: '08_golf_ball.png',
+    style: 'width:10px; position:absolute;',
+    morph: {
+      link:'chain',
+      transition:'linear'
+   }
+  }).inject('green','top');
+
+  // inject the ball's shadow
+  var shad = new Element('img',{
+    id: 'shad',
+    src: '08_golf_ball_shadow.png',
+    style: 'width:10px; position:absolute; margin-top:150px;',
+    morph: {
+      link:'chain',
+      transition:'linear'
+   }
+  }).inject('ball','after');
+
+  alert('Ready?');
+
+  // top, left, width
+  var ballmov = [
+    [150, 10, 10],
+    [ 20, 20, 10], // bounce 1
+    [160, 30, 10],
+    [100, 40, 10], // bounce 2
+    [180, 50, 15],
+    [140, 75, 20], // bounce 3
+    [220,100, 25],
+    [200,150, 30], // bounce 4
+    [300,200, 40],
+    [400,250, 50], // basically rolling now
+    [420,300, 60]
+  ];
+  var shad_bottom = 150;
+  ballmov.each(function(el,i) {
+    var extra = (el[2]/4).toInt();
+    if (el[0]>shad_bottom) shad_bottom = el[0]+extra;
+    else shad_bottom*=1.03;
+    //shad_bottom = el[0]+extra;
+    $('ball').morph({
+      'margin-top':el[0],
+      'margin-left':el[1],
+      'width':el[2]
+    });
+    $('shad').morph({
+      'margin-top':shad_bottom,
+      'margin-left':el[1],
+      'width':el[2]
+    });
+  });
+  </script>
+</body>
+</html>

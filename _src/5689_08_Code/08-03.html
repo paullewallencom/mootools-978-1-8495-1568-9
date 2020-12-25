@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>08-03 :: Saving space on our site: the "more" button that shows more with a transition :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <div class="news_outer">
+    <div class="news_inner">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Donec eu sem velit, in cursus ligula.  Vestibulum commodo metus a ipsum ornare id faucibus metus sollicitudin.  Vivamus sit amet magna sem, non scelerisque augue.  Duis convallis nisi non mauris luctus facilisis.  Sed vehicula dui eu libero vestibulum sit amet placerat nunc fringilla.  Morbi et neque neque, vel posuere mauris.  Nulla commodo, augue sit amet egestas eleifend, lectus sem lobortis lectus, vitae rhoncus elit mi sit amet turpis.  Fusce molestie interdum lacus, ac semper enim facilisis id.  Nunc sed orci et nisi consequat aliquet non et risus.  Proin vehicula ultrices purus, vel scelerisque purus ultrices scelerisque.  Integer ipsum metus, pharetra sit amet blandit vel, porttitor ac nisi.  Phasellus vehicula sollicitudin nulla, nec imperdiet orci eleifend ut.  Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Nunc id turpis ipsum, sit amet volutpat justo.  Praesent nec erat dolor.  Etiam vel rutrum dolor.  Integer eu mauris metus.  Donec ut condimentum mauris.  Pellentesque suscipit elit quis dolor ornare eget lobortis nisl condimentum.  Sed porttitor euismod lectus sit amet fermentum.  
+    </div>
+  </div>
+  <div class="more_news">More...</div>
+
+  <style type="text/css">
+    .news_outer { height:40px; width:400px; overflow:hidden; }
+    .more_news { cursor:pointer; margin-top:7px; color:#00F; }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+    var news_outer_ht = 40;
+    $$('.more_news').addEvent('click',function() {
+      var el = this.getPrevious('.news_outer');
+      var outer_ht = el.getStyle('height').toInt();
+      var inner_ht = el.getChildren('.news_inner')[0].getStyle('height').toInt();
+      if (outer_ht==news_outer_ht) {
+        var new_ht = inner_ht;
+        var txt = 'Less';
+      } else {
+        var new_ht = news_outer_ht;
+        var txt = 'More';
+      }
+      el.tween('height',new_ht); 
+      this.set('text',txt);
+    });
+  </script>
+</body>
+</html>

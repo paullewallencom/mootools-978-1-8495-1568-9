@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>06-11 :: Creating a sortable list :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <!-- got to have the CORE, but -->
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+  <!-- the MORE has all the trix -->
+  <script type="text/javascript" src="mootools-more-1.3.0.js"></script>
+  <!-- at least, in chapter SIX! -->
+</head>
+<body>
+
+<h1>My Sortable List of Favorite Chapters</h1>
+<ol id="mylist" style="line-height:25px;cursor:pointer;">
+  <li>Oldies-but-Goodies: Foundational Moo</li>
+  <li>Switching Paddles Midstream: Changing HTML After Page Load</li>
+  <li>And On The 8th Day: Creating HTML Elements</li>
+  <li>That's Not All Folks: Animation and Scrolling</li>
+  <li>Mr. Clean Uses Ajax: Remote Asynchronous Calls</li>
+  <li>Easy Come Easy Go: Drag and Drop</li>
+  <li>Knock And The Door Will Open: Events and Listeners</li>
+  <li>Dynomite! (Movin' On Up): Working with Transitions</li>
+  <li>WTFudge Is Going On?: Troubleshooting MooTools</li>
+  <li>Enough Is Never Enough: Extending MooTools</li>
+  <li>I'll Gladly Pay Tue. For Moo Today: Extensions on the Web</li>
+  <li>Electric Milk: Plugins and More</li>
+</ol>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+    var list = new Sortables('mylist');
+  </script>
+</body>
+</html>

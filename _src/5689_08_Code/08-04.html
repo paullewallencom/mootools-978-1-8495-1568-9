@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>08-04 :: Saving space on our site: expanding upon interaction :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+<form action="#TO-DO:please-build-server-side-processor" method="post">
+  <table>
+    <tr>
+      <td align="right"><label for="name">Your Name</label></td>
+      <td><input type="text" value="" name="name" id="name"></td>
+    </tr>
+    <tr>
+      <td align="right"><label for="email">Your Email Address</label></td>
+      <td><input type="text" value="" name="email" id="email"></td>
+    </tr>
+    <tr>
+      <td valign="top" align="right"><label for="customer_comments">Message</label></td>
+      <td>
+        <textarea name="customer_comments">Hello,</textarea>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <input type="submit" value="Send Message">
+        <input type="reset" value="Clear Form">
+     </td>
+    </tr>
+  </table>
+</form>
+
+  <style type="text/css">
+    .blurred_element { width:100px; background-color:#FFFFFF; } 
+    .focused_element { width:300px; background-color:#FFF79F; }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  $$('input[type=text],textarea').each(function(el) {
+    el.addClass('blurred_element');
+    el.addEvents({
+      'focus':function() { 
+        this.morph('.focused_element');
+      },
+      'blur':function() {
+        this.morph('.blurred_element');
+      }
+    });
+  });
+  </script>
+</body>
+</html>

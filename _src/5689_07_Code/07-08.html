@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>07-08 :: Remove a chain of events :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <form action="javascript:" method="get">
+    <input type="button" id="mybutton" value="Start Chain"/>
+    <input type="button" id="mycancel" value="Clear Chain"/>
+  </form>
+  <div id="numbers">
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+    <span>5</span>
+    <span>6</span>
+    <span>7</span>
+  </div>
+  
+
+  <style type="text/css">
+  #numbers span {
+    color:#DEDEDE;
+    font-size:50px;
+  }
+  #numbers span.next-in-chain {
+    color:#000;
+    font-weight:bold;
+  }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+
+  // define a collection to use in this script
+  var my_numbers = $$('#numbers span');
+
+  // create a function that advances one number 
+  var advance_one_number = function() { 
+    var next_number = -1;
+    my_numbers.each(function(el,index) {
+      if (el.hasClass('next-in-chain')) next_number = index.toInt();
+      el.removeClass('next-in-chain');
+    });
+    next_number++;
+    if ($defined(my_numbers[next_number])) {
+      my_numbers[next_number].addClass('next-in-chain');
+    }
+    // until the chain is expended, a new call happens every second
+    my_chain.callChain.delay(1000,my_chain);
+  }
+
+  // create a chain
+  var my_chain = new Chain();
+
+  // record one advance into the chain for each number
+  my_numbers.each(function(el) { my_chain.chain(advance_one_number); });
+
+  // what to do when our button is clicked:
+  $('mybutton').addEvent('click',function() {
+
+    // the 7 calls to advance the number are kicked off here
+    my_chain.callChain.delay(1000,my_chain);
+
+  });
+
+  $('mycancel').addEvent('click',function() {
+
+    alert('Clearing chain of '+my_chain.$chain.length+' actions');
+    my_chain.clearChain();
+    alert('Cleared! Chain now has '+my_chain.$chain.length+' actions');
+
+  });
+  </script>
+</body>
+</html>

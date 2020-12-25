@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>08-05 :: Welcoming users in a flashy way: flying in text smoothly :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <div id="main">
+    <div id="place_holder">
+      <div id="flying_div">Hooray, you are here!</div>
+    </div>
+  </div>
+
+  <style type="text/css">
+  #main { width:600px;  margin:auto; }
+  #place_holder {
+    margin:auto;
+    width:300px;
+    height:100px;
+  }
+  #flying_div {
+    width:300px;
+    line-height:100px;
+    font-size:25px;
+    text-align:center;
+    position:absolute;
+    left:-500px;
+    top:-100px;
+  }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  window.addEvent('load',function() {
+    var new_pos = $('place_holder').getPosition();
+    $('flying_div').morph({
+      'opacity':[0,1],
+      'left':new_pos.x, 
+      'top':new_pos.y
+    });
+  });
+  </script>
+</body>
+</html>

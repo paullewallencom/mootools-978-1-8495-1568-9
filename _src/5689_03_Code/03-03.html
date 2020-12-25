@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>03-03 :: Iframe Creation :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <form action="javascript:" method="get">
+    <input id="submit" type="button" value="i can has search?"/>
+  </form>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  $('submit').addEvent('click', function() {
+
+    // use mootools to create an iframe element
+    new Element('iframe', {
+      'src'        : 'http://google.com',
+      'frameborder': 1,
+      'width'      : 800,
+      'height'     : 400
+    }).replaces($('submit'));
+
+  });
+  </script>
+</body>
+</html>

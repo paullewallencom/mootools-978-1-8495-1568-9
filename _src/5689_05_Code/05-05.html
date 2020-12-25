@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>05-05 :: Parse and display JSON data :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <form action="javascript:" method="get">
+    <input type="button" id="mybutton" value="JSON!" 
+      onclick="myJax.send();"/>
+  </form>
+  <h1 id="json_greeting_div"></h1>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+
+  // request is extended with the Request.JSON class
+  var myJax = new Request.JSON({
+
+    url: '05_json_data.txt', 
+
+    // the response argument is the json object
+    onSuccess: function(json_response) {
+      var json_greeting_var = json_response.greeting; 
+      $('json_greeting_div').set('html',json_greeting_var);
+
+      $('mybutton').setStyle('visibility','hidden');
+    }
+  });
+  </script>
+</body>
+</html>

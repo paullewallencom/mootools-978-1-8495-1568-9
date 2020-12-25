@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>03-07 :: Create an A tag with an event listener :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <iframe id="miframe" src="http://bing.com" width="800" height="400"></iframe>  
+
+  <style type="text/css">
+  a { cursor:pointer; display:block; color:#00F; text-decoration:underline; font-size:20px; }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+
+  // create an a tag to add to the dom
+  var bung = new Element('a',{
+    'text': 'Google, please.'
+  });
+  
+  // put a listener on our a tag 
+  bung.addEvent('click',function() {
+    // change the iframe src to google
+    $('miframe').set('src','http://google.com');
+    this.destroy();
+  });
+
+  // inject our a tag into the dom
+  bung.inject('miframe','before');
+  </script>
+</body>
+</html>

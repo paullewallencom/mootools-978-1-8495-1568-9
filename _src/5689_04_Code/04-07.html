@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>04-07 :: Use effects to grab a users attention :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+  <!-- hey look, ma, no "more"! -->
+</head>
+<body>
+  <form action="javascript:" method="get">
+    <input id="submit" type="button" value="Find Lorem"/>
+  </form>
+
+  <div id="lorem_ipsum">
+    <h2 id="lorem_ipsum_h2">Lorem ipsum</h2>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/><br/>Donec eu sem velit, in cursus ligula.<br/><br/>Vestibulum commodo metus a ipsum ornare id faucibus metus sollicitudin.<br/><br/>
+    <a href="#my_top">Back to Top</a>
+  </div>
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  // show an error 
+  $('submit').addEvent('click', function() {
+    find_lorem();
+  });
+  function find_lorem() {
+
+    // redundancy demonstrates Fx.Tween()s 1st argument flexibility
+    var my_element_2_animate = 'lorem_ipsum_h2';            // A
+    var my_element_2_animate = $$('#lorem_ipsum h2')[0];    // B
+
+    // instantiate the Tween class object
+    var lorem_tween = new Fx.Tween(my_element_2_animate,{duration:100,link:'chain'});
+
+    // choose some colors to loop through in our attention grabber
+    var colors = ['#F33','#FF3','#FFF']
+    colors.forEach(function(color) {
+
+      // chain up each color
+      lorem_tween.start('background-color',color);
+
+    });
+  }
+  </script>
+</body>
+</html>

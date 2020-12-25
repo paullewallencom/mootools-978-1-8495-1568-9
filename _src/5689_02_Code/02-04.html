@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>02-04 :: Move a Group of Elements :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <p><span>The </span> Fox jumped over the lazy dog.</p>
+  <p>Jack and Jill went up one <span>hill </span> and down another.</p>
+  <p>By any other name, this <span>rose </span> is still a rose.</p>
+  <p>The superhero towered <span>high </span> above all others.</p>
+  <p>You will find the culprit <span>over </span> there.</p>
+  <p>We all know <span>the </span> ways to write good code.</p>
+  <p>The rain fell mainly upon the green <span>trees</span> of Spain.</p>
+  <p>Sentences should end with a period, <span>. </span> right?</p> 
+  <form action="javascript:" method="get">
+    <input id="my_trigger" type="button" value="Go!"/>
+  </form>
+  <hr/>
+
+  <h1 id="my_new_sentence"></h1>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  // for effect, grab the elements before moving them
+  var my_elements_to_move = $$('span');
+
+  $('my_trigger').addEvent('click',function() {
+
+    // move the element group by tag
+    my_elements_to_move.inject('my_new_sentence');
+
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>09-08 :: Using the console debugger in Firefox's Firebug :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <h1>Debugging with Firebug</h1>
+  <h2>Set breakpoints, then reload</h2>
+  <div id="canvas"></div>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  var my_object = {
+    'one':'one',
+    'two':2,
+    'key3':'Trinity'
+  };
+  var index = 0;
+  window.addEvent('load',function() {
+    Object.each(
+      // 1st param is the object
+      my_object,
+      // 2nd param is the function to iterate with
+      function(obj_val,obj_key) {
+        // using a text div 
+        $('canvas').set('html',$('canvas').get('html')+'<br/>'+index+') '+obj_key+':'+obj_val); 
+        // the poor man index
+        index++;
+      }
+    );
+  });
+  </script>
+</body>
+</html>

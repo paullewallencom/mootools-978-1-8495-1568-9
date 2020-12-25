@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>08-07 :: Making a little duck bounce when clicked :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <div id="main">
+    <div id="duck_it">
+      <img src="08_duck_bounce.jpg" alt="Ouch!" title="Ouch!" id="bounce"/>
+      <img src="08_duck_stand.jpg" alt="Click me!" title="Click me!" id="stand"/>
+    </div>
+  </div>
+
+  <style type="text/css">
+  #main { width:600px;  margin:auto; }
+  #duck_it { margin-top:10px; cursor:pointer; }
+  #duck_it img { position:absolute; }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  $('duck_it').set('tween',{
+    property: 'margin-top',
+    transition: 'bounce:out',
+    duration: 'short',
+    onStart: function() {
+      $('stand').fade('hide');
+      $('bounce').fade('show');
+    },
+    onComplete: function() {
+      $('bounce').fade('hide');
+      $('stand').fade('show');
+    }
+  }).addEvent('click',function() {
+    this.tween(-100,10);
+  });
+  </script>
+</body>
+</html>

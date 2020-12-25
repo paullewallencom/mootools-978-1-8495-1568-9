@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>04-03 :: Smoothly scroll to an internal page link :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <!-- got to have the CORE, but -->
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+  <!-- let's n0t forget the MORE -->
+  <script type="text/javascript" src="mootools-more-1.3.0.js"></script>
+  <!-- at least in chapter FOUR! -->
+</head>
+<body>
+  <div id="news">
+
+    Scrolling, Internal Navigation:
+    <a name="my_top"></a>
+    <ul id="my_nav">
+      <li><a href="#lorem_ipsum">Lorem ipsum</a></li>
+      <li><a href="#that_is_all">That's all!</a></li>
+    </ul>
+
+    <div id="lorem_ipsum">
+      <a name="lorem_ipsum"></a>
+      <h2>Lorem ipsum</h2>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/><br/>Donec eu sem velit, in cursus ligula.<br/><br/>Vestibulum commodo metus a ipsum ornare id faucibus metus sollicitudin.<br/><br/>
+      <a href="#my_top">Back to Top</a>
+    </div>
+
+    <div id="that_is_all">
+      <a name="that_is_all"></a>
+      <h2>That's all!</h2>
+      Well, that is actually all for scrolling and for this recipe.  Thank you for visiting, ya'll come back now, ya hear?<br/><br/>
+      <a href="#my_top">Back to Top</a>
+    </div>
+
+  </div>
+  <style type="text/css">
+    #news {
+      /* the body must be loooon for this to work */
+      margin:0 auto; /* center the div! */
+      width:150px;   /* skinny but long */
+      font-size:20px;/* big, big n long */
+    }
+    div[id=that_is_all] {
+      /* the bottom link needs to scroll further! */ 
+      margin-bottom:500px;
+    }
+  </style>
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+
+  // it shouldn't be this easy, right?
+  var mySmoothScroll = new Fx.SmoothScroll();
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>02-11 :: Clock :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+
+  <!-- we MUST have the mootools more Date classes -->
+  <script type="text/javascript" src="mootools-more-1.3.0.js"></script>
+
+</head>
+<body>
+
+  <table id="moo_clock">
+    <tr>
+      <td>0</td><td>0</td> 
+        <td>:</td>
+      <td>0</td><td>0</td> 
+        <td class="blink">:</td>
+      <td>0</td><td>0</td>
+    </tr>
+  </table>
+
+  <style type="text/css">
+    #moo_clock {
+      position:fixed;
+      border-top:3px solid #999;
+      border-right:3px solid #333;
+      border-bottom:3px solid #555;
+      border-left:3px solid #BBB;
+      background-color:#777;
+      /* instead "top" and "left" */
+      top:25px; left:25px;
+      /* try "bottom" and "right" */
+    } 
+    #moo_clock tr td {
+      border:0px;
+      color:#00FF00;
+    }
+    #moo_clock tr td.blink {
+      visibility:hidden;
+    }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+
+    // create the periodic function  
+    function moo_time(){
+
+      // date setup
+      var js_date    = new Date();
+      var js_hours   = js_date.get('Hours').toString().pad(2, '0', 'left');
+      var js_minutes = js_date.get('Minutes').toString().pad(2, '0', 'left');
+      var js_seconds = js_date.get('Seconds').toString().pad(2, '0', 'left');
+
+      // switch paddles in the stream of HTML
+      var tds = $$('#moo_clock tr td');
+
+      // we can use a js string as an array
+      var hour1 = js_hours[0];
+      tds[0].set('text', hour1);
+
+      // we can save a step in setting our time
+      tds[1].set('text', js_hours[1]);
+      tds[3].set('text', js_minutes[0]);
+      tds[4].set('text', js_minutes[1]);
+      tds[6].set('text', js_seconds[0]);
+      tds[7].set('text', js_seconds[1]);
+
+      // make the seconds' dots blink. mmm, blink
+      tds[5].toggleClass('blink');
+    }
+
+    // this is what calls the function every one second
+    var moo_time_hand = moo_time.periodical(1000);
+
+  </script>
+</body>
+</html>

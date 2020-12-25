@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>08-11 :: Fading through a rotating group of images - slideshow! :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <div id="fodaddy">
+    <div id="fo"></div>
+  </div>
+
+  <style type="text/css">
+  #fodaddy {
+    width:367px;
+    height:318px;
+    background-image:url('08_cow_one.jpg');
+  }
+  #fo {
+    height:318px;
+  }
+  </style>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+
+// what images would you like to flash fade through?
+// the first image is in the styles: graceful degradation 
+var images = [
+  '08_cow_one.jpg',
+  '08_cow_two.jpg',
+  '08_cow_three.jpg',
+];
+
+// set the speed of transition here
+var ispeed = 2000;
+
+// global scope of which image we're on
+var mynext = 1;
+
+// morph properties of element #fo
+$('fo').set('morph', {
+  link: 'chain',
+  duration: ispeed,
+  // after the curtain pulls, switch it all up!
+  onComplete: function() {
+    $('fosure').fade('in');
+    $('fosure').set('src',images[mynext]);
+    mynext = (++mynext>=images.length) ? 0 : mynext; 
+    //setTimeout('changeImage()',ispeed);
+    change_image.delay(ispeed);
+  }
+});
+
+// utility function to fade in the "curtain"
+var change_image = function() {
+  $('fo').fade(
+    'hide'
+  ).setStyle(
+    'background-image',
+    'url('+images[mynext]+')'
+  ).morph({'opacity':1});
+}
+
+// get the ball rolling
+window.addEvent('load',function() {
+  var fosure = new Element('img',{
+    'id': 'fosure',
+    'src': images[1],
+    'style': 'position:absolute;'
+  }).inject('fodaddy','top').fade('hide');
+  change_image.delay(ispeed);
+  //setTimeout('changeImage()',ispeed);
+});
+
+
+  </script>
+</body>
+</html>

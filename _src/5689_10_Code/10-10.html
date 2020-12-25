@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>10-10 :: Extending images - lazy load :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <div id="main">
+    <img src="10_spacer.gif" longdesc="10_img1.jpg" alt="Woman drinking coffee"/>
+    <img src="10_spacer.gif" longdesc="10_img2.jpg" alt="Woman posing, relaxed"/>
+    <img src="10_spacer.gif" longdesc="10_img3.jpg" alt="Woman drinking coffee"/>
+    <img src="10_spacer.gif" longdesc="10_img4.jpg" alt="Woman posing, relaxed"/>
+  </div>
+
+  <style type="text/css">
+  #main {
+    width:620px;
+    margin:0 auto;
+  }
+  #main img {
+     border:10px solid #CDCDCD;
+     margin:100px;
+     width:400px;
+     height:300px;
+  }
+  </style>
+
+  <script type="text/javascript">
+  var imgmootater = new Class({
+    initialize: function() { this.imgs = $$('img'); },
+    make_titles: function() {
+      this.imgs.each(function(el){
+        el.set('title',el.get('alt'));
+      });
+    }
+  });
+
+  var boundload;
+  var lazyloader = new Class({
+    Implements: imgmootater,
+    initialize: function(spacer) {
+      this.make_titles();
+      this.spacer = spacer;
+      // we need to bind "this" to this.loadimgs
+      boundload = this.loadimgs.bind(this);
+      // now we can pass the bound function to addEvent
+      window.addEvent('scroll',boundload);
+      window.addEvent('load',boundload);
+    }, 
+    loadimgs: function() {
+      //always redefine which elements to loop over
+      this.imgs = $$('img[src='+this.spacer+']');
+      // stop eternal calling to this method once complete
+      if (this.imgs.length==0) window.removeEvent('scroll',boundload);
+      // what is the viewable area?
+      var wscor = window.getCoordinates();
+      var wspos = window.getScroll(); 
+      // stop any browser loading of imgs below fold
+      this.imgs.each(function(el){ 
+        var pos = el.getPosition();
+        if (pos.y<=wscor.bottom+wspos.y) {
+          el.set('src',el.get('longdesc')); 
+          el.removeProperty('longdesc');
+        }
+      });
+    }
+  }); 
+  new lazyloader('10_spacer.gif');
+  </script>
+
+</body>
+</html>

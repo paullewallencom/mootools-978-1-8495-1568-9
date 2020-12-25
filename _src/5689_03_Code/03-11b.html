@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>03-11b :: Create a SELECT Element via Ajax :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+  <form action="javascript:" method="get" id="my_form">
+    <div id="automobile1" style="background-color:#CDCDCD; margin:5px;">
+    <table>
+      <tr>
+        <td valign="top">Loan, Lease or Own</td>
+        <td valign="top">
+          <input name=loanlease[]" type="radio" class="rad2" value="loan"/>Loan<br />
+          <input name=loanlease[]" type="radio" class="rad2" value="lease"/>Lease<br />
+          <input name=loanlease[]" type="radio" class="rad2" value="own"/>Own
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">Next, Please Choose:</td>
+        <td valign="top" id="put_er_here"></td>
+      </tr>
+    </table>
+    <br/>
+    </div>
+    </div>
+  </form>
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+    var loan = '<option value="">Choose loan amount remaining:</option><option value="1">A Lot</option><option value="2">About Half</option><option value="3">Not Much!</option>';
+    var lease = '<option value="">Choose lease type:</option><option value="1">Dealer ripped me off</option><option value="2">Manufacturer rebates saved me</option><option value="3">I make a lot of money so whatever</option>';
+    var own = '<option value="">Choose ownership description:</option><option value="1">It\'s an Adam Sandler car</option><option value="2">The car rarely breaks down</option><option value="3">She\'s auto-show worthy and just had her oil changed!</option>';
+    // model the data that might come back via ajax in a real-world application
+    var my_pretend_ajax_data = {'loan':loan,'lease':lease,'own':own};
+
+    $$('.rad2').addEvent('click', function() {
+      // if there is anything in put_er_here, dump it
+      $('put_er_here').empty();
+      // *this* can be confusing, love it instead of hating it!
+      var my_value = this.value;
+
+// replace n0t_jax with Ajax
+var myAjax = new Request.HTML({
+  url : 'my_server_side_select_creator.php?my_value='+my_value,
+  onSuccess : function(tree,elements,IS_ajax_html) {
+    new Element('select', {
+      'name': 'other_stuff', 'id': 'other_stuff', 'html': IS_ajax_html
+    }).inject('put_er_here');
+    $('other_stuff').selectedIndex = 0;
+  }
+}).get();
+
+    });
+  </script>
+</body>
+</html>

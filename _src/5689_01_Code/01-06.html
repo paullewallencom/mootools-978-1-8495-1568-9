@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>01-06 :: Iterate over an Array/Obama's Oldies :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  Hello Bulletin Board:<br/>
+  <div id="hello_board"></div>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  var obamas_oldies = ['Stevie Wonder', 'a lot of Bob Dylan', 'a lot of Rolling Stones', 'a lot of Miles Davis', 'John Coltrane'];
+  var hb = $('hello_board');
+
+  // iteration over an array object using a callback function
+  obamas_oldies.each(
+    function(oldie, index){
+      hb.set('html',hb.get('html')+'<br/>Hello '+oldie+', you are number '+index+' on the Obama playlist!');
+    }
+  );
+
+  </script>
+</body>
+</html>

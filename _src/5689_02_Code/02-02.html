@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>02-02 :: Get a Collection of Elements :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+  <form action="javascript:" method="get">
+    Choose an Animal:<br/>
+    <select id="animal">
+      <option value="">Select Animal</option>
+      <option value="cat">Cat</option>
+      <option value="dog">Dog</option>
+      <option value="pig">Pig</option>
+    </select>
+    // some browsers do not fire select onchange until focus changes
+    <input type="button" value="Select Animal"/>
+    <br/><br/>
+    <select id="animal_items">
+      <!-- cat options -->
+      <option class="nopeek cat" value="1">Ball of String</option>
+      <option class="nopeek cat" value="2">Fake Mouse</option>
+      <option class="nopeek cat" value="3">Catnip (mmm)</option>
+      <!-- dog options -->
+      <option class="nopeek dog" value="4">Juicy Bone</option>
+      <option class="nopeek dog" value="5">Bouncy Ball</option>
+      <option class="nopeek dog" value="6">Rope w/ Handle</option>
+      <!-- pig options -->
+      <option class="nopeek pig" value="7">Mud</option>
+      <option class="nopeek pig" value="8">Slop</option>
+      <option class="nopeek pig" value="9">Water Hose</option>
+    </select>
+  </form>
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  
+  // get a collection of elements 
+  var all = $$('.nopeek');
+
+  all.setStyle('display','none'); 
+  $('animal').addEvent('change',function pare_options() {
+    all.setStyle('display','none');
+    var animal_chosen = $('animal').value;
+    $$('.'+animal_chosen).setStyle('display','block');
+  });
+
+  </script>
+</body>
+</html>

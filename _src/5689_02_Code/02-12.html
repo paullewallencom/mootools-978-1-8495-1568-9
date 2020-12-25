@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>02-12 :: Write/Read a Cookie :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <form action="javascript:" method="get">
+    <span id="set_cookie">
+      Please enter your username:
+      <input id="my_cookie_value" type="text" value="Jim"/> 
+      <input id="my_cookie_write" type="button" value="Write Cookie"/>
+    </span>
+    <input id="my_cookie_read"  type="button" value="Read Cookie"/>
+  </form>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+    // my_cookie_val will have the value of the key
+    var my_cookie_val = Cookie.read('users_name');
+    if (!my_cookie_val) $('my_cookie_read').setStyle('visibility','hidden'); 
+    else $('my_cookie_value').set('value', my_cookie_val);
+    $('my_cookie_write').addEvent('click', function() {
+      // set a length of days for the cookie to be kept by the user
+      var days = 1;
+      // get the username given by the user
+      var my_cookie_val = $('my_cookie_value').get('value');
+ 
+      // my_cookie_obj will have the options, key, and the value in it
+      var my_cookie_obj = Cookie.write('users_name', my_cookie_val, {duration: days});
+
+      // my_cookie_read now has something to read
+      $('my_cookie_read').setStyle('visibility','visible'); 
+      $('set_cookie').setStyle('visibility','hidden'); 
+    });
+    $('my_cookie_read').addEvent('click', function() {
+      var my_cookie_val = Cookie.read('users_name');
+      alert('Hello '+my_cookie_val);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>10-08 :: Extending typeOf, fixing undefined var testing :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+
+  // it is possible to extend functions with new methods
+  typeOf.extend('defined',function(item) {
+    if (typeof(item)=='undefined') return 'undefined';
+    else return typeOf(item); 
+  });
+
+  //var oops_var; // commented out "on purpose"
+  function report_typeOf(ismoo) {
+    if (ismoo==0) {
+      document.write('oops_var1 is: '+typeof(oops_var)+'<br/>');
+    } else {
+      // concat parent to avoid error from derefrencing an undeclared var
+      document.write('oops_var2 is: '+typeOf.defined(window.oops_var)+'<br/>');
+    }
+  }
+  </script>
+
+  <h2>without moo:</h2>
+  <script type="text/javascript">
+    report_typeOf(0);
+  </script>
+
+  <h2><strong>with</strong> moo:</h2>
+
+  <script type="text/javascript">
+    report_typeOf(1);
+  </script>
+  
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>02-05 :: Remove an Element by ID UNOBTRUSIVELY :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <p id="s1">The Fox jumped over the lazy dog. 
+    <small id="d1">DELETE THIS CRUD</small>
+  </p>
+  <p id="s2">Jack and Jill went up one hill and down another. 
+    <small id="d2">DELETE THIS CRUD</small>
+  </p>
+  <p id="s3">By any other name, this rose is still a rose. 
+    <small id="d3">DELETE THIS CRUD</small>
+  </p>
+  <p id="s4">The superhero towered high above all others. 
+    <small id="d4">DELETE THIS CRUD</small>
+  </p>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  // remember that double dollar takes a css selector
+  $$('small').addEvent('click',function() {
+    // the IDs are conveniently congruent
+    var my_id_2_delete = this.id.replace('d','s'); 
+    delete_by_id(my_id_2_delete);
+  });
+  function delete_by_id(id) {
+
+    // when we know the id, it's very easy to get rid of it
+    $(id).destroy();
+
+  }
+  </script>
+  <!-- our delete links should look like links, yay! -->
+  <style type="text/css">small { cursor: pointer; color: #00F; }</style>
+</body>
+</html>

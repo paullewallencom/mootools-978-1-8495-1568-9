@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>09-06 :: Viewing the members of an ARRAY using three different methods :: MooTools Recipes `(>>)^</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="mootools-1.3.0.js"></script>
+</head>
+<body>
+
+  <h1>Alert firing onload</h1>
+  <h2>Shows contents of small array</h2>
+  <div id="canvas"></div>
+
+  <noscript>JavaScript is disabled.</noscript>
+  <script type="text/javascript">
+  var my_array = ['one',2,'Trinity'];
+  window.addEvent('load',function() {
+    my_array.each(function(array_el,index) {
+
+      // using alert
+      alert(index+': '+array_el);
+    
+      // using a text div 
+      $('canvas').set('html',$('canvas').get('html')+'<br/>'+index+': '+array_el); 
+
+      // using the console
+      console.log(index+': '+array_el);
+
+    });
+  });
+  </script>
+</body>
+</html>
